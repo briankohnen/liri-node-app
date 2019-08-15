@@ -26,7 +26,7 @@ function concertThis() {
                     "\nVenue : " + response.data[i].venue.name + 
                     "\nCity : " + response.data[i].venue.city + 
                     "\nWhen : " + moment(response.data[i].datetime).format("L") + 
-                    "\n============================"
+                    "\n============================\n"
                     );
             }
         })
@@ -51,7 +51,7 @@ function spotifyThisSong() {
         "\nTrack : " + response.tracks.items[0].name +
         "\nAlbum : " + response.tracks.items[0].album.name + 
         "\nListen here : " + response.tracks.items[0].external_urls.spotify +
-        "\n============================"
+        "\n============================\n"
         );
     })
     .catch(function(err) {
@@ -81,7 +81,7 @@ function movieThis() {
             "\nLanguage(s) : " + response.data.Language +
             "\nPlot : " + response.data.Plot +
             "\nNotable actors : " + response.data.Actors +
-            "\n============================"
+            "\n============================\n"
         )
     })
     .catch(function(error) {
@@ -121,6 +121,7 @@ function doWhatItSays() {
 };
 
 function run(runWhich, userInp) {
+    
     switch (runWhich) {
 
     case "concert-this":
@@ -148,9 +149,16 @@ function run(runWhich, userInp) {
             "\nOr 'spotify-this-song' and a song name to find information about it" +
             "\nType 'movie-this' and a movie title to look up detailed information on it" +
             "\nOr type 'do-what-it-says' to let LIRI give you a suggestion" +
-            "\n============================"
+            "\n============================\n"
         );
     };
+    fs.appendFile("log.txt", runWhich + " : " + userInp + "\n", function(err) {
+
+        if (err) {
+            console.log(err)
+        }
+        else console.log("content added");
+    })
 };
 
 run(runWhich, userInp);
