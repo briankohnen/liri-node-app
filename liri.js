@@ -6,9 +6,11 @@ const Spotify = require("node-spotify-api");
 const spotify = new Spotify(keys.spotify);
 const fs = require("fs");
 
+let action = process.argv[2];
+
 function concertThis() {
 
-    let artist = process.argv.slice(2).join(" ");
+    let artist = process.argv.slice(3).join(" ");
 
     console.log("Upcoming concerts for : " + artist.toUpperCase());
 
@@ -35,7 +37,7 @@ function concertThis() {
 
 function spotifyThisSong() {
 
-    let song = process.argv.slice(2).join(" ");
+    let song = process.argv.slice(3).join(" ");
 
     //console.log("\n\n\n\n");
 
@@ -60,7 +62,7 @@ function spotifyThisSong() {
 
 function movieThis() {
 
-    let movieName = process.argv.slice(2).join(" ");
+    let movieName = process.argv.slice(3).join(" ");
 
     if (movieName === "") {
         movieName = "The+Godfather";
@@ -87,4 +89,54 @@ function movieThis() {
 
 };
 
-movieThis();
+//movieThis();
+
+function doWhatItSays() {
+
+    fs.readFile("random.txt", "utf8", function(error, data) {
+
+        if(error) {
+            console.log(error);
+        }
+
+        console.log(data);
+
+        var dataArr = data.split(",");
+
+        console.log(dataArr);
+
+    })
+}
+
+//doWhatItSays();
+
+switch (action) {
+
+case "concert-this":
+    concertThis();
+    break;
+
+case "spotify-this-song":
+    spotifyThisSong();
+    break;
+
+case "movie-this":
+    movieThis();
+    break;
+
+case "do-what-it-says":
+    doWhatItSays();
+    break;
+
+default:
+    console.log(
+        "\n============================" +
+        "\nWelcome to LIRI!" +
+        "\n============================" +
+        "\nType 'concert-this' and a band/artist to see upcoming shows" +
+        "\nOr 'spotify-this-song' and a song name to find information about it" +
+        "\nType 'movie-this' and a movie title to look up detailed information on it" +
+        "\nOr type 'do-what-it-says' to let LIRI give you a suggestion"
+    );
+}
+
