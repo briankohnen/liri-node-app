@@ -147,7 +147,8 @@ function run(runWhich, userInp) {
             "\nType 'concert-this' and a band/artist to see upcoming shows" +
             "\nOr 'spotify-this-song' and a song name to find information about it" +
             "\nType 'movie-this' and a movie title to look up detailed information on it" +
-            "\nOr type 'do-what-it-says' to let LIRI give you a suggestion"
+            "\nOr type 'do-what-it-says' to let LIRI give you a suggestion" +
+            "\n============================"
         );
     };
 };
