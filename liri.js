@@ -14,7 +14,7 @@ function concertThis() {
 
     let artist = process.argv.slice(2).join(" ");
 
-    console.log("\n\n\n\nUpcoming concerts for : " + artist.toUpperCase());
+    console.log("Upcoming concerts for : " + artist.toUpperCase());
 
     axios.get("https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp")
         .then(function(response) {
@@ -41,18 +41,24 @@ function spotifyThisSong() {
 
     let song = process.argv.slice(2).join(" ");
 
+    //console.log("\n\n\n\n");
+
     spotify.search({ type: 'track', query: song})
     .then(function(response) {
-        console.log(JSON.stringify(response, null, 3));
-        console.log(response.tracks.items[0].album.artists[0].name);
-        console.log(response.tracks.items[0].external_urls.spotify);
-        console.log(response.tracks.items[0].name);
-        console.log(response.tracks.items[0].album.name);
+        console.log(
+        "\n============================" + 
+        "\nArtist(s) : " + response.tracks.items[0].album.artists[0].name + 
+        "\nTrack : " + response.tracks.items[0].name +
+        "\nAlbum : " + response.tracks.items[0].album.name + 
+        "\nListen here : " + response.tracks.items[0].external_urls.spotify +
+        "\n============================"
+        );
     })
     .catch(function(err) {
         console.log(err);
     });
 
-}
+};
 
-spotifyThisSong();
+//spotifyThisSong();
+
