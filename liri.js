@@ -1,14 +1,10 @@
 require("dotenv").config();
-
 const keys = require("./keys.js");
-
 const axios = require("axios");
-
 const moment = require("moment");
-
 const Spotify = require("node-spotify-api");
-
 const spotify = new Spotify(keys.spotify);
+const fs = require("fs");
 
 function concertThis() {
 
@@ -62,3 +58,33 @@ function spotifyThisSong() {
 
 //spotifyThisSong();
 
+function movieThis() {
+
+    let movieName = process.argv.slice(2).join(" ");
+
+    if (movieName === "") {
+        movieName = "The+Godfather";
+    }
+
+    axios.get("http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy")
+    .then(function(response) {
+        console.log(
+            "\n============================" +
+            "\nTitle : " + response.data.Title +
+            "\nReleased in : " + response.data.Year + 
+            "\nIMDB rating : " + response.data.imdbRating + 
+            "\nRotten Tomatoes rating : " + response.data.Ratings[1].Value + 
+            "\nProduced in : " + response.data.Country +
+            "\nLanguage(s) : " + response.data.Language +
+            "\nPlot : " + response.data.Plot +
+            "\nNotable actors : " + response.data.Actors +
+            "\n============================"
+        )
+    })
+    .catch(function(error) {
+        console.log(error);
+    })
+
+};
+
+movieThis();
