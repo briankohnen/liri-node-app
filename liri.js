@@ -6,11 +6,14 @@ const Spotify = require("node-spotify-api");
 const spotify = new Spotify(keys.spotify);
 const fs = require("fs");
 
-let action = process.argv[2];
+
+let runWhich = process.argv[2];
+let userInp = process.argv.slice(3).join(" ");
+
 
 function concertThis() {
 
-    let artist = process.argv.slice(3).join(" ");
+    let artist = userInp;
 
     console.log("Upcoming concerts for : " + artist.toUpperCase());
 
@@ -33,11 +36,10 @@ function concertThis() {
 
 };
 
-//concertThis();
 
 function spotifyThisSong() {
 
-    let song = process.argv.slice(3).join(" ");
+    let song = userInp;
 
     //console.log("\n\n\n\n");
 
@@ -58,11 +60,10 @@ function spotifyThisSong() {
 
 };
 
-//spotifyThisSong();
 
 function movieThis() {
 
-    let movieName = process.argv.slice(3).join(" ");
+    let movieName = userInp;
 
     if (movieName === "") {
         movieName = "The+Godfather";
@@ -89,7 +90,6 @@ function movieThis() {
 
 };
 
-//movieThis();
 
 function doWhatItSays() {
 
@@ -99,44 +99,57 @@ function doWhatItSays() {
             console.log(error);
         }
 
-        console.log(data);
+        let grabCmd = data.split(",");
+        let toRun = grabCmd[0];
+        let withWhat = grabCmd[1];
 
-        var dataArr = data.split(",");
+        //removing quotes from withWhat 2nd argument to pass -> quotes cause error
+        //when running concert-this
+        let removeQuotes = withWhat.split("");
 
-        console.log(dataArr);
+        for (let i = 0; i < withWhat.length; i++) {
+            if (removeQuotes[i] === '"') {
+                removeQuotes.splice(i, 1);
+            }
+        }
+        withWhat = removeQuotes.join("");
+        userInp = withWhat;
+
+        run(toRun, withWhat);
 
     })
-}
+};
 
-//doWhatItSays();
+function run(runWhich, userInp) {
+    switch (runWhich) {
 
-switch (action) {
+    case "concert-this":
+        concertThis();
+        break;
 
-case "concert-this":
-    concertThis();
-    break;
+    case "spotify-this-song":
+        spotifyThisSong();
+        break;
 
-case "spotify-this-song":
-    spotifyThisSong();
-    break;
+    case "movie-this":
+        movieThis();
+        break;
 
-case "movie-this":
-    movieThis();
-    break;
+    case "do-what-it-says":
+        doWhatItSays();
+        break;
 
-case "do-what-it-says":
-    doWhatItSays();
-    break;
+    default:
+        console.log(
+            "\n============================" +
+            "\nWelcome to LIRI!" +
+            "\n============================" +
+            "\nType 'concert-this' and a band/artist to see upcoming shows" +
+            "\nOr 'spotify-this-song' and a song name to find information about it" +
+            "\nType 'movie-this' and a movie title to look up detailed information on it" +
+            "\nOr type 'do-what-it-says' to let LIRI give you a suggestion"
+        );
+    };
+};
 
-default:
-    console.log(
-        "\n============================" +
-        "\nWelcome to LIRI!" +
-        "\n============================" +
-        "\nType 'concert-this' and a band/artist to see upcoming shows" +
-        "\nOr 'spotify-this-song' and a song name to find information about it" +
-        "\nType 'movie-this' and a movie title to look up detailed information on it" +
-        "\nOr type 'do-what-it-says' to let LIRI give you a suggestion"
-    );
-}
-
+run(runWhich, userInp);
