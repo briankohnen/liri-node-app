@@ -8,7 +8,8 @@ Language interpretation (like Siri's 'Speech Interpretation') app that takes in 
 ## the app
 As a Node based app, LIRI is run within the command line.
 **FIRST** you need to create a .env file and replace values with your own API keys in order for LIRI to function
-![.dotenv Example]
+
+![Example]
 (https://imgur.com/X83ziPP)
 
 As a Node based app, LIRI takes in four commands run from the command line
