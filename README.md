@@ -1,2 +1,3 @@
 # liri-node-app
-Language interpretation app that gives back data based on user inputted parameters
+Language interpretation (like Siri's 'Speech Interpretation') app that takes in a user's input to grab information
+through different API calls and return data.
