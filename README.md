@@ -6,12 +6,20 @@ Language interpretation (like Siri's 'Speech Interpretation') app that takes in 
 2. Learning about how your favorite movie has a 2/10 rating on IMDB should inspire you to cry and take to the internet messageboards.
 
 ## the app
+As a Node based app, LIRI is run within the command line.
+**FIRST** you need to create a .env file and replace values with your own API keys in order for LIRI to function
+![.dotenv Example]
+(https://imgur.com/X83ziPP)
+
 As a Node based app, LIRI takes in four commands run from the command line
 * node liri.js
   * concert-this *band name*
   * spotify-this-song *song name*
   * movie-this *movie name*
   * do-what-it-says
+  
+  
+
 
 
 
