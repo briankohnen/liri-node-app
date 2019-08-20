@@ -15,6 +15,10 @@ function concertThis() {
 
     let artist = userInp;
 
+    if (artist === "") {
+        artist = "Vundabar";
+    }
+
     console.log("Upcoming concerts for : " + artist.toUpperCase());
 
     axios.get("https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp")
@@ -28,11 +32,19 @@ function concertThis() {
                     "\nWhen : " + moment(response.data[i].datetime).format("L") + 
                     "\n============================\n"
                     );
+                    addToLogTxt(
+                    "\n============================" + 
+                    "\nVenue : " + response.data[i].venue.name + 
+                    "\nCity : " + response.data[i].venue.city + 
+                    "\nWhen : " + moment(response.data[i].datetime).format("L") + 
+                    "\n============================\n");
             }
         })
         .catch(function(error) {
             console.log(error);
         });
+
+        
 
 };
 
@@ -41,7 +53,9 @@ function spotifyThisSong() {
 
     let song = userInp;
 
-    //console.log("\n\n\n\n");
+    if (song === "") {
+        song = "I Remember Deadmau5";
+    }
 
     spotify.search({ type: 'track', query: song})
     .then(function(response) {
@@ -53,6 +67,12 @@ function spotifyThisSong() {
         "\nListen here : " + response.tracks.items[0].external_urls.spotify +
         "\n============================\n"
         );
+        addToLogTxt("\n============================" + 
+        "\nArtist(s) : " + response.tracks.items[0].album.artists[0].name + 
+        "\nTrack : " + response.tracks.items[0].name +
+        "\nAlbum : " + response.tracks.items[0].album.name + 
+        "\nListen here : " + response.tracks.items[0].external_urls.spotify +
+        "\n============================\n");
     })
     .catch(function(err) {
         console.log(err);
@@ -83,6 +103,16 @@ function movieThis() {
             "\nNotable actors : " + response.data.Actors +
             "\n============================\n"
         )
+        addToLogTxt("\n============================" +
+        "\nTitle : " + response.data.Title +
+        "\nReleased in : " + response.data.Year + 
+        "\nIMDB rating : " + response.data.imdbRating + 
+        "\nRotten Tomatoes rating : " + response.data.Ratings[1].Value + 
+        "\nProduced in : " + response.data.Country +
+        "\nLanguage(s) : " + response.data.Language +
+        "\nPlot : " + response.data.Plot +
+        "\nNotable actors : " + response.data.Actors +
+        "\n============================\n");
     })
     .catch(function(error) {
         console.log(error);
@@ -115,12 +145,25 @@ function doWhatItSays() {
         withWhat = removeQuotes.join("");
         userInp = withWhat;
 
-        run(toRun, withWhat);
+        runLiri(toRun, withWhat);
+        
+    })
+
+};
+
+
+function addToLogTxt(dataToAdd) {
+    fs.appendFile("log.txt", runWhich + " : " + userInp + dataToAdd, function(err) {
+
+        if (err) {
+            console.log(err)
+        }
 
     })
 };
 
-function run(runWhich, userInp) {
+
+function runLiri(runWhich, userInp) {
     
     switch (runWhich) {
 
@@ -152,13 +195,6 @@ function run(runWhich, userInp) {
             "\n============================\n"
         );
     };
-    fs.appendFile("log.txt", runWhich + " : " + userInp + "\n", function(err) {
-
-        if (err) {
-            console.log(err)
-        }
-        else console.log("content added");
-    })
 };
 
-run(runWhich, userInp);
+runLiri(runWhich, userInp);
