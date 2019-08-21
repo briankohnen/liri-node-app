@@ -25,19 +25,17 @@ function concertThis() {
         .then(function(response) {
             
             for (var i = 0; i < response.data.length; i++) {
-                console.log( 
-                    "\n============================" + 
-                    "\nVenue : " + response.data[i].venue.name + 
-                    "\nCity : " + response.data[i].venue.city + 
-                    "\nWhen : " + moment(response.data[i].datetime).format("L") + 
-                    "\n============================\n"
-                    );
-                    addToLogTxt(
-                    "\n============================" + 
-                    "\nVenue : " + response.data[i].venue.name + 
-                    "\nCity : " + response.data[i].venue.city + 
-                    "\nWhen : " + moment(response.data[i].datetime).format("L") + 
-                    "\n============================\n");
+                
+                var prettyResponse =
+                "\n============================" + 
+                "\nVenue : " + response.data[i].venue.name + 
+                "\nCity : " + response.data[i].venue.city + 
+                "\nWhen : " + moment(response.data[i].datetime).format("L") + 
+                "\n============================\n";
+                
+                console.log(prettyResponse);
+                addToLogTxt(prettyResponse);
+                
             }
         })
         .catch(function(error) {
@@ -59,20 +57,18 @@ function spotifyThisSong() {
 
     spotify.search({ type: 'track', query: song})
     .then(function(response) {
-        console.log(
+
+        var veryPrettyResponse = 
         "\n============================" + 
         "\nArtist(s) : " + response.tracks.items[0].album.artists[0].name + 
         "\nTrack : " + response.tracks.items[0].name +
         "\nAlbum : " + response.tracks.items[0].album.name + 
         "\nListen here : " + response.tracks.items[0].external_urls.spotify +
-        "\n============================\n"
-        );
-        addToLogTxt("\n============================" + 
-        "\nArtist(s) : " + response.tracks.items[0].album.artists[0].name + 
-        "\nTrack : " + response.tracks.items[0].name +
-        "\nAlbum : " + response.tracks.items[0].album.name + 
-        "\nListen here : " + response.tracks.items[0].external_urls.spotify +
-        "\n============================\n");
+        "\n============================\n";
+
+        console.log(veryPrettyResponse);
+        addToLogTxt(veryPrettyResponse);
+
     })
     .catch(function(err) {
         console.log(err);
@@ -91,19 +87,9 @@ function movieThis() {
 
     axios.get("http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy")
     .then(function(response) {
-        console.log(
-            "\n============================" +
-            "\nTitle : " + response.data.Title +
-            "\nReleased in : " + response.data.Year + 
-            "\nIMDB rating : " + response.data.imdbRating + 
-            "\nRotten Tomatoes rating : " + response.data.Ratings[1].Value + 
-            "\nProduced in : " + response.data.Country +
-            "\nLanguage(s) : " + response.data.Language +
-            "\nPlot : " + response.data.Plot +
-            "\nNotable actors : " + response.data.Actors +
-            "\n============================\n"
-        )
-        addToLogTxt("\n============================" +
+
+        var gorgeousResponse =
+        "\n============================" +
         "\nTitle : " + response.data.Title +
         "\nReleased in : " + response.data.Year + 
         "\nIMDB rating : " + response.data.imdbRating + 
@@ -112,7 +98,11 @@ function movieThis() {
         "\nLanguage(s) : " + response.data.Language +
         "\nPlot : " + response.data.Plot +
         "\nNotable actors : " + response.data.Actors +
-        "\n============================\n");
+        "\n============================\n";
+
+        console.log(gorgeousResponse);
+        addToLogTxt(gorgeousResponse);
+
     })
     .catch(function(error) {
         console.log(error);
